@@ -32,7 +32,8 @@ fn js_window_list(mut cx: FunctionContext) -> JsResult<JsArray> {
         .unwrap()
         .iter()
         .map(|window| {
-            let pid: u32 = unsafe { GetWindowThreadProcessId(HWND(window.hwnd), None) };
+            let mut pid: u32 = 0;
+            unsafe { GetWindowThreadProcessId(HWND(window.hwnd), Some(&mut pid)) };
 
             Window {
                 hwnd: window.hwnd,
@@ -51,19 +52,20 @@ fn js_window_list(mut cx: FunctionContext) -> JsResult<JsArray> {
     Ok(window_array)
 }
 
-fn js_get_window_thread_process_id(mut cx: FunctionContext) -> JsResult<JsNumber> {
+fn js_get_window_process_id(mut cx: FunctionContext) -> JsResult<JsNumber> {
     let hwnd = cx
         .argument::<JsString>(0)?
         .value(&mut cx)
         .parse::<isize>()
         .unwrap();
-    let pid: u32 = unsafe { GetWindowThreadProcessId(HWND(hwnd), None) };
+    let mut pid: u32 = 0;
+    unsafe { GetWindowThreadProcessId(HWND(hwnd), Some(&mut pid)) };
     Ok(cx.number(pid))
 }
 
 #[neon::main]
 fn main(mut cx: ModuleContext) -> NeonResult<()> {
     cx.export_function("windowList", js_window_list)?;
-    cx.export_function("getWindowThreadProcessId", js_get_window_thread_process_id)?;
+    cx.export_function("getWindowThreadProcessId", js_get_window_process_id)?;
     Ok(())
 }
