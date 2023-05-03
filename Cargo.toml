@@ -1,0 +1,20 @@
+[package]
+name = "win-screenshot-bridge"
+version = "0.1.0"
+license = "ISC"
+edition = "2018"
+exclude = ["index.node"]
+
+[lib]
+crate-type = ["cdylib"]
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+win-screenshot = "4.0.3"
+windows = {version = "0.48.0", features = ["Win32_UI_WindowsAndMessaging", "Win32_Foundation"]}
+
+[dependencies.neon]
+version = "0.10"
+default-features = false
+features = ["napi-6"]
