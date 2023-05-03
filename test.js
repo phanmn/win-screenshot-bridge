@@ -1,7 +1,7 @@
-const { windowList,  getWindowThreadProcessId } = require("./index");
+const { windowList,  getWindowProcessId } = require("./index");
 
 const windows = windowList();
 
 console.log(windows);
-console.log(getWindowThreadProcessId(windows[0].hwnd));
-console.log(getWindowThreadProcessId("123"));
+console.log(getWindowProcessId(windows[0].hwnd));
+console.log(getWindowProcessId("123"));

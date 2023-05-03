@@ -66,6 +66,6 @@ fn js_get_window_process_id(mut cx: FunctionContext) -> JsResult<JsNumber> {
 #[neon::main]
 fn main(mut cx: ModuleContext) -> NeonResult<()> {
     cx.export_function("windowList", js_window_list)?;
-    cx.export_function("getWindowThreadProcessId", js_get_window_process_id)?;
+    cx.export_function("getWindowProcessId", js_get_window_process_id)?;
     Ok(())
 }
